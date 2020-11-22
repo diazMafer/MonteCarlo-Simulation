@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>MonteCarlo</title>
+        <link rel="stylesheet" href="bootstrap.min.css">
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-inverse bg-inverse fixed-top">
+                    <span class="navbar-text text-center" style="color: white; font-size: 30px;" >
+                      Imagenes con simulación MonteCarlo
+                    </span>
+            </nav>
+        </header>
+        <br><br><br>
+        <div class="container">
+            <div class="card text-center">
+                <div class="card-header"></div>
+                <div class="card-block">
+                    <h4 class="card-title">Escoger una figura</h4>
+                    <form name"myForm">
+                        <div class="custom-controls">
+                            <label class="custom-control custom-radio">
+                                <input onchange=changer(0) name="test" type="radio" class="custom-control-input" value="0">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">Monalisa</span>
+                            </label>
+                            <label class="custom-control custom-radio">
+                                <input onchange=changer(1) name="test" type="radio" value="2" class="custom-control-input">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">El grito</span>
+                            </label>
+                            <label class="custom-control custom-radio">
+                                <input id="littleHeart" onchange=changer(3) name="test" type="radio" value="1" class="custom-control-input" checked="checked">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">Corazón</span>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>        
+        <br><br>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card text-center">
+                        <span id="sizeForm"></span >
+                            <div class="card-block">
+                                <h3 class="card-title">Imagen Original</h3>
+                                <canvas id="canvas" width="250" height="300"></canvas>  
+                            </div
+                            <p> 0 - 100k</p>                       
+                            <p id="showRange">-</p>
+                            <input type="range" id="myRange" min="0" max="100000" name="" value=""> <br>
+
+                            
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card text-center">
+                        <div class="card-block">
+                            <h3 class="card-title">Imagen con MonteCarlo</h3>
+                            <canvas id="canvasCompute" width="200" height="300"></canvas>
+                            <p style="display:none" id="showAir">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+        <footer class="bd-footer text-muted">
+            <img id="mona" width="220" height="277" src="monalisa.jpg" style="display: none;">
+            <img id="scream" width="220" height="277" src="img_the_scream.jpg" style="display: none;">
+        </footer>
+            
+        <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+        </script>
+        <script src="monteCarlo.js" charset="utf-8"></script>
+        <script type="text/javascript">
+            var mc = new MonteCarlo($("canvas"), $("canvasCompute"));
+            mc.drawLittleHeart();
+            
+            $("myRange").onchange = function(){
+                $("showRange").innerHTML= "<kbd>"+this.value+" iteraciones</kbd>";
+                mc.clearCanvasCompute();
+                mc.montecarlo(this.value)
+                mc.drawCompute(this.value);
+            }
+            
+            function changer(i){
+                if(i == 4){
+                    coordinates = [];
+                }
+                mc.setFormDraw(i);
+            }
+        </script>
+            
+    </body>
+</html>
