@@ -8,15 +8,16 @@ var MonteCarlo = class MonteCarlo {
         this.formEnum = {"mona" : 0, "scream" : 1, "heart" : 3};
     }
     
-    clearCanvas(){ // cambiar la imagen simulada (en caso haya una) a un blank canvas paar dibujar otra imagen
+    clearCanvas(){ // se cambia la imagen original a otra seleccionada
         this.ctxCanvas.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
     
-    clearCanvasCompute(){
+    clearCanvasCompute(){// cambiar la imagen simulada (en caso haya una) a un blank canvas para dibujar otra imagen
         this.ctxCanvasCompute.clearRect(0, 0, this.canvasCompute.width, this.canvasCompute.height);
     }
     
     /**
+     * Se hace display a la imagen del grito a simular. 
     * Codigo para dibujar un canva a partir de una imagen obtenido de 
     * https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_canvas_drawimage
     */
@@ -25,13 +26,18 @@ var MonteCarlo = class MonteCarlo {
         var img = document.getElementById("scream");
         this.ctxCanvas.drawImage(img, 10, 10);
     }
-
+    /*
+    * Se hace display a la imagen original (foto) de la Mona Lisa. 
+    */
     drawMona(){
         this.clearCanvas();
         var img = document.getElementById("mona");
         this.ctxCanvas.drawImage(img, 10, 10);
     }
-    
+    /**
+     * Para hacer una comparación entre cómo funciona el algoritmo con imágenes blanco y negro vs a color, se añade una imagen que es un corazón negro dibujado en un 
+     * canvas blanco, con ayuda de HTML. 
+     */
     drawLittleHeart(){
         this.clearCanvas();
         this.ctxCanvas.beginPath();
@@ -75,18 +81,20 @@ var MonteCarlo = class MonteCarlo {
             throw "Invalid color component";
         return ((r << 16) | (g << 8) | b).toString(16);
     }
+    /**
+     * Se ejecuta el método de montecarlo para obtener la imagen a pintar. 
+     * @param n : cantidad de ensayos para la simulacion
+     */
     montecarlo(n){
         let x, y, pixels, data;
         let count = 0;
         let min = 0;
         let max = this.canvas.width; 
         this.copyData = []; 
-
         /*
             Codigo para obtener los pixeles de una imagen y buscar a traves de los colores de ella obtenido de:
             https://stackoverflow.com/questions/19499500/canvas-getimagedata-for-optimal-performance-to-pull-out-all-data-or-one-at-a 
         */
-       
         for(var i = 0; i < n; ++i){ 
             x = Math.floor(Math.random() * (max - min) + min);
             y = Math.floor(Math.random() * (max - min) + min);
